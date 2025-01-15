@@ -20,6 +20,9 @@ import postcssPresetEnv from 'postcss-preset-env';
 import { resolve } from "path";
 import livereload from 'rollup-plugin-livereload';
 
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
 // Rollup configuration
 export default defineConfig({
     input: 'assets/js/index.js',
@@ -30,16 +33,18 @@ export default defineConfig({
         plugins: [terser()]
     },
     plugins: [
-        commonjs(), 
-        nodeResolve(), 
+        commonjs(),
+        nodeResolve(),
         babel({ babelHelpers: 'bundled' }),
         postcss({
             extract: true,
             sourceMap: true,
             plugins: [
+                tailwindcss,
+                autoprefixer,
                 atImport(),
                 postcssPresetEnv({})
-            ], 
+            ],
             minimize: true,
         }),
         process.env.BUILD !== "production" && livereload({
